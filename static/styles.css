@@ -219,3 +219,90 @@ footer {
     margin: 0;
 }
 
+    #calendar-event {
+        position: relative;
+        text-align: center;
+        padding: 50px;
+        background: #f8f9fa;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 0 auto;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    #calendar-event h2 {
+        color: #f7c6c7;
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+
+    #calendar-event p {
+        font-size: 1.2em;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    #password {
+        padding: 10px;
+        border: 2px solid #f7c6c7;
+        border-radius: 25px;
+        font-size: 1em;
+        width: 80%;
+        max-width: 300px;
+        margin: 0 auto 20px auto;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: border-color 0.3s ease;
+    }
+
+    #password:focus {
+        border-color: #f7c6c7;
+        outline: none;
+        box-shadow: 0 0 5px rgba(255, 79, 79, 0.5);
+    }
+
+    button {
+        background-color: #f7c6c7;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-top: 10px;
+    }
+
+    button:hover {
+        background-color: #f7c6c7;
+    }
+    #password-section {
+        margin-top: 20px;
+    }
+
+    #confetti {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9999;
+        display: none;
+    }
+
+    #confetti.hidden {
+        display: none;
+    }
+.hidden {
+    display: none;
+}
+.show{
+    display:block;
+}
+.reveal {
+    display: block;
+    margin-top: 20px;
+    font-size: 20px;
+    color: #007bff;
+}
