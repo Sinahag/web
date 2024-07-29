@@ -117,9 +117,9 @@
                 <section id="calendar-event" class="hidden">
                     <h2>Sara's Surprise</h2>
                     <div id="password-section">
-                        <p>Please enter the password to unlock the surprise:</p>
+                        <p id="pass-prompt">Please enter the password to unlock the surprise:</p>
                         <input type="password" id="password">
-                        <button onclick="checkPassword()">Submit</button>
+                        <button id="btn" onclick="checkPassword()">Submit</button>
                     </div>
                     <canvas id="confetti-canvas" class="hidden"></canvas>
 
@@ -229,8 +229,9 @@
             const today = new Date();
             const month = today.getMonth(); // 0-based (0 = January, 7 = August)
             const date = today.getDate(); // 1-31
+            const year = today.getFullYear();
             console.log(`Month: ${month}, Date: ${date}`); // Debugging
-            return month === 6 && date === 28; // August is month 7 (0-based index)
+            return month === 7 || 8 && date === 9 || 28 && year === 2024; // August is month 7 (0-based index)
         }
 
         function checkPassword() {
@@ -243,7 +244,13 @@
                     const confettiCanvas = document.getElementById('confetti-canvas');
                     confettiCanvas.classList.remove('hidden');
                     const card = document.getElementById('card');
+                    const pass = document.getElementById('pass-prompt');
+                    const button = document.getElementById('btn')
+                    pass.classList.add('hidden');
+                    button.classList.add('hidden');
                     card.classList.remove('hidden');
+                    passwordInput.classList.add('hidden');
+
 
                     confetti({
                         particleCount: 200,
@@ -262,7 +269,7 @@
                     confettiCanvas.classList.add('hidden');
 
                     if (profilePic) {
-                        profilePic.src = './static/sass.HEIC'; // Path to the new profile picture
+                        profilePic.src = './slides/4.HEIC';
                     }
                 } else {
                     alert('The surprise is not available today. Please check back on August 9.');
