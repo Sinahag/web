@@ -51,7 +51,7 @@
                 <section id="about">
                     <h2>About Me</h2>
                     <div class="profile-section">
-                        <img src="./static/pro.HEIC" alt="Sara Echeverry" class="profile-pic">
+                        <img src="./static/pro.HEIC" alt="Sara Echeverry" class="profile-pic" id="headshot">
                         <p>Hello! I'm Sara Echeverry, a passionate economics student with a business minor aiming to
                             make a positive impact in the corporate world. I have a keen interest in business strategy,
                             marketing, and finance. My background in sales and marketing has provided me with a solid
@@ -115,13 +115,44 @@
                 </section>
 
                 <section id="calendar-event" class="hidden">
-                    <h2>Sara's Surprise Event</h2>
+                    <h2>Sara's Surprise</h2>
                     <div id="password-section">
                         <p>Please enter the password to unlock the surprise:</p>
                         <input type="password" id="password">
                         <button onclick="checkPassword()">Submit</button>
                     </div>
                     <canvas id="confetti-canvas" class="hidden"></canvas>
+
+                    <div id="card" class="hidden">
+                        <div class="card-content">
+                            <h1>Happy Birthday!</h1>
+                            <p>To the lady that I met in a class that I wasn't planning on taking, with a smile that
+                                fills the room with joy, a heart that cares like no other, the eyes that show me why I
+                                love her, and a voice that drives me to strive further. You're the goofy princess that I
+                                have dreamt of being withand I can't wait to see the incredible things life has in
+                                store
+                                for you.
+                                As you step into this new chapter, I wish you success in all your endeavors, and know
+                                that I'll always be here for you whenever you need me.
+                            </p>
+                            <p>
+                                I'm so happy to be spending your 22nd birthday with you, and look forward to spend many
+                                more as we see you blossom into the brave, independant, and pretty women you are
+                                destined to be.
+                            </p>
+                            <div class="signature">
+                                <p>Te amo</p>
+                            </div>
+
+                            <div class="slideshow-container" id="slideshow-container">
+                                <!-- Slides will be generated here dynamically -->
+                                <!-- Navigation buttons -->
+                                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                            </div>
+
+                        </div>
+                    </div>
                 </section>
 
             </div>
@@ -134,8 +165,58 @@
         </div>
     </footer>
 
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
+        let slideIndex = 0;
+        const totalSlides = 23;  // Total number of slides
+
+        // Dynamically generate slides
+        function generateSlides() {
+            const container = document.getElementById('slideshow-container');
+
+            for (let i = 1; i <= totalSlides; i++) {
+                const slide = document.createElement('div');
+                slide.className = 'slide fade';
+
+                const img = document.createElement('img');
+                img.src = `slides/${i}.HEIC`;
+                img.alt = `Slide ${i}`;
+
+                slide.appendChild(img);
+                container.insertBefore(slide, container.querySelector('.prev'));  // Insert before navigation buttons
+            }
+        }
+
+        // Show slides function
+        function showSlides() {
+            const slides = document.getElementsByClassName('slide');
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = 'none';  // Hide all slides
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {
+                slideIndex = 1; // Loop back to the first slide
+            }
+            slides[slideIndex - 1].style.display = 'block';  // Show the current slide
+            setTimeout(showSlides, 2000); // Change slide every 2 seconds
+        }
+
+        function plusSlides(n) {
+            slideIndex += n;
+            if (slideIndex > totalSlides) {
+                slideIndex = 1;
+            } else if (slideIndex < 1) {
+                slideIndex = totalSlides;
+            }
+            showSlides();  // Update the slide display
+        }
+
+        // Initialize slideshow
+        document.addEventListener('DOMContentLoaded', function () {
+            generateSlides();
+            showSlides();
+        });
         function isSpecialDate() {
             const today = new Date();
             const month = today.getMonth(); // 0-based (0 = January, 7 = August)
@@ -145,11 +226,17 @@
         }
 
         function checkPassword() {
-            const password = document.getElementById('password').value;
+            const passwordInput = document.getElementById('password');
+            const password = passwordInput.value;
+            const profilePic = document.getElementById('headshot'); // Select the profile picture element
+
             if (password === 'mamiculo') {
                 if (isSpecialDate()) {
                     const confettiCanvas = document.getElementById('confetti-canvas');
                     confettiCanvas.classList.remove('hidden');
+                    const card = document.getElementById('card');
+                    card.classList.remove('hidden');
+
                     confetti({
                         particleCount: 200,
                         spread: 200,
@@ -164,18 +251,18 @@
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
+                    confettiCanvas.classList.add('hidden');
 
-                    // Remove the confetti canvas after 5 seconds
-                    setTimeout(() => {
-                        confettiCanvas.classList.add('hidden');
-                    }, 3000); // Adjust the duration as needed
-
+                    if (profilePic) {
+                        profilePic.src = './static/sass.HEIC'; // Path to the new profile picture
+                    }
                 } else {
                     alert('The surprise is not available today. Please check back on August 9.');
                 }
             } else {
                 alert('Incorrect password');
             }
+            passwordInput.value = "";
         }
 
         document.addEventListener('DOMContentLoaded', function () {

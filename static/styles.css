@@ -306,3 +306,107 @@ footer {
     font-size: 20px;
     color: #007bff;
 }
+.card-content {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    padding: 20px;
+    align-items: center;
+}
+
+.card-content {
+    padding: 20px;
+}
+
+.card-content h1 {
+
+    font-size: 2.5em;
+    color: #f7c6c7;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.card-content p {
+    font-size: 1.2em;
+    color: #333;
+    margin: 10px 0;
+}
+
+.signature {
+    font-family: cursive;
+    margin-top: 20px;
+    font-size: 1.2em;
+    font-style:italic;
+    color: #555;
+}
+
+.signature p {
+    margin: 5px 0;
+}
+
+/* Slideshow container */
+.slideshow-container {
+    position: relative;
+    max-width: 100%;
+    margin: auto;
+    overflow: hidden;
+}
+
+/* Slides */
+.slide {
+    display: none; /* Hide all slides by default */
+}
+
+.slide img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Navigation buttons */
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 3px;
+    user-select: none;
+    background-color: rgba(0, 0, 0, 0.5);
+    transform: translateY(-50%);
+}
+
+.prev {
+    left: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.next {
+    right: 0;
+    border-radius: 0 3px 3px 0;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Optional: Add a fade transition effect */
+.fade {
+    -webkit-animation: fade 1.5s ease-in-out;
+    animation: fade 1.5s ease-in-out;
+}
+
+@-webkit-keyframes fade {
+    from { opacity: 0.4 }
+    to { opacity: 1 }
+}
+
+@keyframes fade {
+    from { opacity: 0.4 }
+    to { opacity: 1 }
+}
