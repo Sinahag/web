@@ -7,7 +7,7 @@ DTSTAMP:20240730T090000Z
 DTSTART;TZID=America/Vancouver:20240923T190000
 DTEND;TZID=America/Vancouver:20240923T230000
 SUMMARY:Childish Gambino - The New World Tour
-DESCRIPTION:Concert at Rogers Arena. Enjoy the show!
+DESCRIPTION:Concert at Rogers Arena.\nReservation Number: 15-57957/VAN\nSection: 106\nRow: 20\nSeat: 107 - 108\nEnjoy the show!
 LOCATION:Rogers Arena, 800 Griffiths Way, Vancouver, BC, V6B 6G1
 END:VEVENT
 END:VCALENDAR

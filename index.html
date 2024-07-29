@@ -165,58 +165,66 @@
         </div>
     </footer>
 
-
+    <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
         let slideIndex = 0;
-        const totalSlides = 23;  // Total number of slides
+        let slideTimeout; // Variable to store timeout
 
-        // Dynamically generate slides
+        // Function to generate slides
         function generateSlides() {
-            const container = document.getElementById('slideshow-container');
+            const container = document.querySelector('.slideshow-container');
 
-            for (let i = 1; i <= totalSlides; i++) {
+            for (let i = 1; i <= 23; i++) {
                 const slide = document.createElement('div');
-                slide.className = 'slide fade';
+                slide.classList.add('slide');
 
                 const img = document.createElement('img');
                 img.src = `slides/${i}.HEIC`;
                 img.alt = `Slide ${i}`;
 
                 slide.appendChild(img);
-                container.insertBefore(slide, container.querySelector('.prev'));  // Insert before navigation buttons
+                container.appendChild(slide);
             }
         }
 
-        // Show slides function
+        // Function to show slides
         function showSlides() {
-            const slides = document.getElementsByClassName('slide');
-            for (let i = 0; i < slides.length; i++) {
-                slides[i].style.display = 'none';  // Hide all slides
-            }
-            slideIndex++;
-            if (slideIndex > slides.length) {
-                slideIndex = 1; // Loop back to the first slide
-            }
-            slides[slideIndex - 1].style.display = 'block';  // Show the current slide
-            setTimeout(showSlides, 2000); // Change slide every 2 seconds
+            const slides = document.querySelectorAll('.slide');
+            if (slides.length === 0) return; // Exit if no slides
+
+            slides.forEach((slide, index) => {
+                slide.style.display = index === slideIndex ? 'block' : 'none';
+            });
+
+            // Clear previous timeout to prevent multiple intervals
+            clearTimeout(slideTimeout);
+
+            // Automatically change slide every 5 seconds
+            slideTimeout = setTimeout(() => {
+                slideIndex = (slideIndex + 1) % slides.length;
+                showSlides();
+            }, 5000); // Adjust timing as needed
         }
 
+        // Function to change slide
         function plusSlides(n) {
+            clearTimeout(slideTimeout); // Clear timeout when manually navigating
             slideIndex += n;
-            if (slideIndex > totalSlides) {
-                slideIndex = 1;
-            } else if (slideIndex < 1) {
-                slideIndex = totalSlides;
-            }
-            showSlides();  // Update the slide display
+            const slides = document.querySelectorAll('.slide');
+            if (slideIndex >= slides.length) slideIndex = 0;
+            if (slideIndex < 0) slideIndex = slides.length - 1;
+            showSlides();
         }
 
         // Initialize slideshow
-        document.addEventListener('DOMContentLoaded', function () {
-            generateSlides();
-            showSlides();
+        document.addEventListener('DOMContentLoaded', () => {
+            generateSlides(); // Generate slides
+            showSlides(); // Initialize the slideshow
+            document.querySelector('.prev').addEventListener('click', () => plusSlides(-1));
+            document.querySelector('.next').addEventListener('click', () => plusSlides(1));
         });
+
         function isSpecialDate() {
             const today = new Date();
             const month = today.getMonth(); // 0-based (0 = January, 7 = August)
