@@ -51,7 +51,7 @@
                 <section id="about">
                     <h2>About Me</h2>
                     <div class="profile-section">
-                        <img src="./static/pro.HEIC" alt="Sara Echeverry" class="profile-pic" id="headshot">
+                        <img src="./static/pro.jpg" alt="Sara Echeverry" class="profile-pic" id="headshot">
                         <p>Hello! I'm Sara Echeverry, a passionate economics student with a business minor aiming to
                             make a positive impact in the corporate world. I have a keen interest in business strategy,
                             marketing, and finance. My background in sales and marketing has provided me with a solid
@@ -115,7 +115,7 @@
                 </section>
 
                 <section id="calendar-event" class="hidden">
-                    <h2>Sara's Surprise</h2>
+                    <h2>For Sara</h2>
                     <div id="password-section">
                         <p id="pass-prompt">Please enter the password to unlock the surprise:</p>
                         <input type="password" id="password">
@@ -138,6 +138,13 @@
                                 I'm so happy to be spending your 22nd birthday with you, and look forward to spend many
                                 more as we see you blossom into the brave, independant, and pretty women you are
                                 destined to be.
+                            </p>
+                            <p class="styled-text">
+                                <span class="highlight">Tu es</span>
+                                <span class="highlight">fuerte</span>,
+                                <span class="highlight">valiente</span>,
+                                <span class="highlight">caliente</span>, y
+                                <span class="highlight">inteligente</span>
                             </p>
                             <div class="signature">
                                 <p>Te amo</p>
@@ -174,12 +181,12 @@
         function generateSlides() {
             const container = document.querySelector('.slideshow-container');
 
-            for (let i = 1; i <= 23; i++) {
+            for (let i = 1; i <= 43; i++) {
                 const slide = document.createElement('div');
                 slide.classList.add('slide');
 
                 const img = document.createElement('img');
-                img.src = `./slides/${i}.HEIC`;
+                img.src = `./slides/${i}.jpg`;
                 img.alt = `Slide ${i}`;
 
                 slide.appendChild(img);
@@ -199,21 +206,17 @@
             // Clear previous timeout to prevent multiple intervals
             clearTimeout(slideTimeout);
 
-            // Automatically change slide every 5 seconds
+            // Automatically change slide every 4 seconds
             slideTimeout = setTimeout(() => {
                 slideIndex = (slideIndex + 1) % slides.length;
-                showSlides();
-            }, 5000); // Adjust timing as needed
+                showSlides(); // Recursively call showSlides to keep the slideshow running
+            }, 4000); // Adjust timing as needed
         }
 
-        // Function to change slide
+        // Function to change slide manually
         function plusSlides(n) {
-            clearTimeout(slideTimeout); // Clear timeout when manually navigating
-            slideIndex += n;
-            const slides = document.querySelectorAll('.slide');
-            if (slideIndex >= slides.length) slideIndex = 0;
-            if (slideIndex < 0) slideIndex = slides.length - 1;
-            showSlides();
+            slideIndex = (slideIndex + n + document.querySelectorAll('.slide').length) % document.querySelectorAll('.slide').length;
+            showSlides(); // Show the slide and reset the automatic slideshow
         }
 
         // Initialize slideshow
@@ -223,6 +226,7 @@
             document.querySelector('.prev').addEventListener('click', () => plusSlides(-1));
             document.querySelector('.next').addEventListener('click', () => plusSlides(1));
         });
+
 
         function isSpecialDate() {
             const today = new Date();
@@ -268,7 +272,7 @@
                     confettiCanvas.classList.add('hidden');
 
                     if (profilePic) {
-                        profilePic.src = './slides/4.HEIC';
+                        profilePic.src = './static/sass.jpg';
                     }
                 } else {
                     alert('The surprise is not available today. Please check back on August 9.');
