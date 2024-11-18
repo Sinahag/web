@@ -117,7 +117,13 @@
                         <a href="https://www.instagram.com/sara_echeverrym/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                         <a href="mailto:sea56@sfu.ca" aria-label="Email"><i class="fas fa-envelope"></i></a>
                     </div>
+                    <div class="resume-button-container">
+                        <button onclick="openResume()" class="resume-button">
+                            <i class="fas fa-file-pdf"></i> View My Resume
+                        </button>
+                    </div>
                 </section>
+
 
                 <section id="calendar-event" class="hidden">
                     <h2>For Sara</h2>
@@ -216,6 +222,11 @@
                 slideIndex = (slideIndex + 1) % slides.length;
                 showSlides(); // Recursively call showSlides to keep the slideshow running
             }, 4000); // Adjust timing as needed
+        }
+
+        function openResume() {
+            const resumeUrl = './static/echeverry.pdf';
+            window.open(resumeUrl, '_blank');
         }
 
         // Function to change slide manually
