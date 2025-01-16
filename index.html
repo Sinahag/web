@@ -144,6 +144,53 @@
                     </div>
                 </section>
 
+                <section id="calendar-event" class="hidden">
+                    <h2>For Sara</h2>
+                    <div id="password-section">
+                        <p id="pass-prompt">Please enter the password to unlock the surprise:</p>
+                        <input type="password" id="password">
+                        <button id="btn" onclick="checkPassword()">Submit</button>
+                    </div>
+                    <canvas id="confetti-canvas" class="hidden"></canvas>
+
+                    <div id="card" class="hidden">
+                        <div class="card-content">
+                            <h1>Happy Birthday!</h1>
+                            <p>To the lady that I met in a class that I wasn't planning on taking, with a smile that
+                                fills the room with joy, a heart that cares like no other, the eyes that show me why I
+                                love her, and a voice that drives me to strive further. You're the goofy princess that I
+                                have dreamt of being with and I can't wait to see the incredible things life has in
+                                store for you.
+                                As you step into this new chapter, I wish you success in all your endeavors, and know
+                                that I'll always be here for you whenever you need me.
+                            </p>
+                            <p>
+                                I'm so happy to be spending your 22nd birthday with you, and look forward to spend many
+                                more as we see you blossom into the brave, independant, and pretty women you are
+                                destined to be.
+                            </p>
+                            <p class="styled-text">
+                                <span class="highlight">Tu eres</span>
+                                <span class="highlight">fuerte</span>,
+                                <span class="highlight">valiente</span>,
+                                <span class="highlight">caliente</span>, y
+                                <span class="highlight">inteligente</span>
+                            </p>
+                            <div class="signature">
+                                <p>Te amo</p>
+                            </div>
+
+                            <div class="slideshow-container" id="slideshow-container">
+                                <!-- Slides will be generated here dynamically -->
+                                <!-- Navigation buttons -->
+                                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+                
             </div>
         </main>
     </div>
@@ -222,7 +269,7 @@
             const date = today.getDate(); // 1-31
             const year = today.getFullYear();
             console.log(`Month: ${month}, Date: ${date}`); // Debugging
-            return month === 10 && (date === 17) && year === 2024; // August is month 7 (0-based index)
+            return month === 0 && (date === 16) && year === 2025; // August is month 7 (0-based index)
         }
 
         function checkPassword() {
