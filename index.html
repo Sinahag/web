@@ -190,7 +190,24 @@
                         </div>
                     </div>
                 </section>
-                
+
+                <section id="mothers-day-event" class="hidden">
+                    <div class="mothers-card">
+                        <h2>For Doña Dora</h2>
+                        <div id="mothers-password-section">
+                            <p id="mothers-pass-prompt">Please enter the password to unlock the forever memories:</p>
+                            <input type="password" id="mothers-password" />
+                            <button id="mothers-btn" onclick="checkMothersPassword()">Submit</button>
+                        </div>
+                        
+                        <div id="mothers-slideshow-container" class="slideshow-container hidden">
+                            <!-- Slides will be added here dynamically -->
+                            <a class="prev" onclick="plusMothersSlides(-1)">&#10094;</a>
+                            <a class="next" onclick="plusMothersSlides(1)">&#10095;</a>
+                        </div>
+                    </div>
+                </section>
+   
             </div>
         </main>
     </div>
@@ -201,59 +218,61 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
         let slideIndex = 0;
-        let slideTimeout; // Variable to store timeout
-
+        let slideTimeout;
+        let mothersSlideIndex = 0;
+        let mothersSlideTimeout;
+    
         // Function to generate slides
         function generateSlides() {
             const container = document.querySelector('.slideshow-container');
-
+    
             for (let i = 1; i <= 26; i++) {
                 const slide = document.createElement('div');
                 slide.classList.add('slide');
-
+    
                 const img = document.createElement('img');
                 img.src = `./slides/${i}.jpg`;
                 img.alt = `Slide ${i}`;
-
+    
                 slide.appendChild(img);
                 container.appendChild(slide);
             }
         }
-
+    
         // Function to show slides
         function showSlides() {
             const slides = document.querySelectorAll('.slide');
             if (slides.length === 0) return; // Exit if no slides
-
+    
             slides.forEach((slide, index) => {
                 slide.style.display = index === slideIndex ? 'block' : 'none';
             });
-
+    
             // Clear previous timeout to prevent multiple intervals
             clearTimeout(slideTimeout);
-
+    
             // Automatically change slide every 4 seconds
             slideTimeout = setTimeout(() => {
                 slideIndex = (slideIndex + 1) % slides.length;
                 showSlides(); // Recursively call showSlides to keep the slideshow running
             }, 4000); // Adjust timing as needed
         }
-
+    
         function openResume() {
             const resumeUrl = './static/echeverry.pdf';
             window.open(resumeUrl, '_blank');
         }
-
+    
         // Function to change slide manually
         function plusSlides(n) {
             slideIndex = (slideIndex + n + document.querySelectorAll('.slide').length) % document.querySelectorAll('.slide').length;
             showSlides(); // Show the slide and reset the automatic slideshow
         }
-
+    
         // Initialize slideshow
         document.addEventListener('DOMContentLoaded', () => {
             generateSlides(); // Generate slides
@@ -261,8 +280,7 @@
             document.querySelector('.prev').addEventListener('click', () => plusSlides(-1));
             document.querySelector('.next').addEventListener('click', () => plusSlides(1));
         });
-
-
+    
         function isSpecialDate() {
             const today = new Date();
             const month = today.getMonth(); // 0-based (0 = January, 7 = August)
@@ -271,12 +289,12 @@
             console.log(`Month: ${month}, Date: ${date}`); // Debugging
             return month === 0 && (date === 16) && year === 2025; // August is month 7 (0-based index)
         }
-
+    
         function checkPassword() {
             const passwordInput = document.getElementById('password');
             const password = passwordInput.value;
             const profilePic = document.getElementById('headshot'); // Select the profile picture element
-
+    
             if (password === 'mamiculo') {
                 if (isSpecialDate()) {
                     const confettiCanvas = document.getElementById('confetti-canvas');
@@ -288,15 +306,14 @@
                     button.classList.add('hidden');
                     card.classList.remove('hidden');
                     passwordInput.classList.add('hidden');
-
-
+    
                     confetti({
                         particleCount: 200,
                         spread: 200,
                         origin: { y: 0.6 },
                         zIndex: 9999
                     });
-
+    
                     // Automatically download the event.ics file
                     const link = document.createElement('a');
                     link.href = './static/event.ics';
@@ -305,7 +322,7 @@
                     link.click();
                     document.body.removeChild(link);
                     confettiCanvas.classList.add('hidden');
-
+    
                 } else {
                     alert('The surprise is not available today. Please check back on August 9.');
                 }
@@ -314,21 +331,137 @@
             }
             passwordInput.value = "";
         }
-
+    
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('password').addEventListener('keypress', function (e) {
                 if (e.key === 'Enter') {
                     checkPassword();
                 }
             });
-
+    
             // Only show the calendar event section if it's the special date
             if (isSpecialDate()) {
                 document.getElementById('calendar-event').classList.remove('hidden');
             }
         });
+    
+        // Mother's Day Functions
+        function generateMothersSlidesFromJSON() {
+            fetch('mothers/index.json')
+                .then(response => response.json())
+                .then(filenames => {
+                    const container = document.getElementById('mothers-slideshow-container');
+                    // Clear existing slides
+                    container.innerHTML = '';
+                    
+                    // Add navigation buttons
+                    const prevButton = document.createElement('a');
+                    prevButton.className = 'prev';
+                    prevButton.onclick = () => plusMothersSlides(-1);
+                    prevButton.innerHTML = '&#10094;';
+                    
+                    const nextButton = document.createElement('a');
+                    nextButton.className = 'next';
+                    nextButton.onclick = () => plusMothersSlides(1);
+                    nextButton.innerHTML = '&#10095;';
+                    
+                    // Add slides
+                    filenames.forEach((filename, i) => {
+                        const slide = document.createElement('div');
+                        slide.classList.add('mothers-slide');
+    
+                        const img = document.createElement('img');
+                        img.src = `./mothers/${filename}`;
+                        img.alt = `Mother Slide ${i + 1}`;
+                        img.loading = 'lazy';
+    
+                        slide.appendChild(img);
+                        container.appendChild(slide);
+                    });
+                    
+                    // Add navigation buttons
+                    container.appendChild(prevButton);
+                    container.appendChild(nextButton);
+                    
+                    // Show first slide
+                    showMothersSlides();
+                })
+                .catch(err => {
+                    console.error("Error loading mothers day slideshow:", err);
+                    alert("Failed to load the slideshow. Please try again later.");
+                });
+        }
+    
+        function showMothersSlides() {
+            const slides = document.querySelectorAll('.mothers-slide');
+            if (slides.length === 0) return;
+    
+            slides.forEach(slide => {
+                slide.style.display = 'none';
+            });
+    
+            slides[mothersSlideIndex].style.display = 'block';
+    
+            clearTimeout(mothersSlideTimeout);
+            mothersSlideTimeout = setTimeout(() => {
+                mothersSlideIndex = (mothersSlideIndex + 1) % slides.length;
+                showMothersSlides();
+            }, 4000);
+        }
+    
+        function plusMothersSlides(n) {
+            const slides = document.querySelectorAll('.mothers-slide');
+            mothersSlideIndex = (mothersSlideIndex + n + slides.length) % slides.length;
+            showMothersSlides();
+        }
+    
+        function isMothersDay(date = new Date()) {
+            // Proper Mother's Day check:
+            const may = new Date(date.getFullYear(), 4, 1);
+            const day = may.getDay();
+            const secondSunday = 1 + ((7 - day) % 7) + 7;
+            return date.getMonth() === 4 && date.getDate() === secondSunday;
+        }
+    
+        function checkMothersPassword() {
+            const passwordInput = document.getElementById('mothers-password');
+            const password = passwordInput.value;
+    
+            if (password.toLowerCase() === 'donadora' && isMothersDay()) {
+                document.getElementById('mothers-password-section').classList.add('hidden');
+                document.getElementById('mothers-slideshow-container').classList.remove('hidden');
+                generateMothersSlidesFromJSON();
+            } else {
+                alert("Incorrect password or it's not Mother's Day.");
+            }
+            
+            passwordInput.value = '';
+        }
+    
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('password').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+            });
+
+            // Only show the calendar event section if it's the special date
+            if (isSpecialDate()) {
+                document.getElementById('calendar-event').classList.remove('hidden');
+            }
+    
+            if (isMothersDay()) {
+                document.getElementById('mothers-day-event').classList.remove('hidden');
+            }
+    
+            const mothersPasswordInput = document.getElementById('mothers-password');
+            if (mothersPasswordInput) {
+                mothersPasswordInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        checkMothersPassword();
+                    }
+                });
+            }
+        });
     </script>
-
-</body>
-
-</html>
